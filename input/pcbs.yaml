@@ -1,0 +1,28 @@
+pcbs:
+  board:
+    outlines:
+      combo:
+        outline: flex_outline
+    footprints:
+      choc:
+        what: choc
+        where: switches
+        params:
+          show_keycaps: true
+          reverse: true
+          hotswap: true
+          solder: false
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      diode:
+        what: diode
+        where: switches
+        params:
+          include_tht: true
+          side: back
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+          designator: "D"
+        adjust:
+          shift: [ diode_shift_x, diode_shift_y ]
+          rotate: 180

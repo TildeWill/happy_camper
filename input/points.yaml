@@ -1,0 +1,64 @@
+points:
+  zones:
+    wing_zone:
+      # Fix placement on KiCAD sheet.
+      anchor:
+        shift: [ 100, -100 ]
+      key: &switch_settings
+        padding: 1ky
+        spread: 1kx
+        width: 1kx
+        height: 1ky
+        tags: "switches"
+      columns:
+        left: null
+        right:
+          key.stagger: 3
+      rows:
+        mod: null
+        bottom: null
+        home: null
+        top: null
+        num: null
+    matrix_zone:
+      key: *switch_settings
+      anchor:
+        ref: wing_zone_right_mod
+        shift: [1kx + wing_hinge_width, 0]
+      columns:
+        pinky:
+          key.stagger: 3
+        ring:
+          key.stagger: 5
+        middle:
+          key.stagger: 3
+        index:
+          key.stagger: -3
+        inner:
+          key.stagger: -3
+          rows.mod.skip: true
+      rows:
+        mod: null
+        bottom: null
+        home: null
+        top: null
+        num: null
+    module_zone:
+      key:
+        <<: *switch_settings
+        splay: -16
+        origin: [ -10,-0 ]
+        spread: 20
+      anchor:
+        ref: matrix_zone_inner_mod
+        shift: [10,-10]
+      columns:
+        left: null
+        center: null
+        right: null
+      rows:
+        thumb: null
+
+    swoop_point:
+      anchor:
+        ref: matrix_zone_middle_num

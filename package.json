@@ -1,0 +1,9 @@
+{
+    "scripts": {
+    },
+    "dependencies": {
+        "@alexlafroscia/yaml-merge": "^4.1.0",
+        "ergogen": "github:ergogen/ergogen",
+        "jscad": "@jscad/cli"
+    }
+}
