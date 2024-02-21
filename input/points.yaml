@@ -24,7 +24,7 @@ points:
       key: *switch_settings
       anchor:
         ref: wing_zone_right_mod
-        shift: [1kx + wing_hinge_width, 0]
+        shift: [kx + 2okx + wing_hinge_cutout_width, 0]
       columns:
         pinky:
           key.stagger: 3
@@ -65,6 +65,10 @@ points:
         shift: [ 0,40 ]
       key.tags: magnetic_connector_points
 
-    swoop_point:
+    center_point:
+      anchor:
+        ref.aggregate.parts: [wing_zone_left_num, wing_zone_left_mod, matrix_zone_inner_num, matrix_zone_inner_mod]
+    top_point:
       anchor:
         ref: matrix_zone_middle_num
+        shift: [0, .5kx+okx]

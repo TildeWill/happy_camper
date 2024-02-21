@@ -8,16 +8,13 @@ units:
   trackpad_width: 65
   trackpad_height: 49
 
-  # case-related variables
-  base_plate_thickness: 2
-  wall_thickness: 4
-  dpx: kx+wall_thickness
-  dpy: ky+wall_thickness
-
-  okx: 0.6kx
-  oky: 0.6ky
+  #padding around the keys for the PCB Outline
+  okx: 0.2kx
+  oky: 0.2ky
 
   diode_shift_x: -3.4
   diode_shift_y: -6
 
-  wing_hinge_width: 10
+  swoop_radius: 300
+  outline_fillet: 3
+  wing_hinge_cutout_width: 2 * outline_fillet + 4

@@ -7,35 +7,33 @@ outlines:
 
   swoop:
     - what: circle
-      where: swoop_point
-      radius: 300
+      where: top_point
+      radius: swoop_radius
       adjust:
-        shift: [ 0,-290 ]
+        shift: [ 0,-swoop_radius ]
     - operation: subtract
       what: circle
-      where: swoop_point
-      radius: 300
+      where: top_point
+      radius: swoop_radius
       adjust:
-        shift: [ 0,-385 ]
+        shift: [ 0,-swoop_radius - 5.5ky - oky ]
     - operation: intersect
       what: rectangle
-      where: swoop_point
-      size: [ 140, 150 ]
-      adjust:
-        shift: [ -23, -30 ]
+      where: center_point
+      size: [ 7kx + 4okx + wing_hinge_cutout_width, 170 ]
 
   wing_hinge_cutout:
     - what: rectangle
       where: wing_zone_right_num
-      size: [wing_hinge_width, 80]
+      size: [wing_hinge_cutout_width, 80]
       adjust:
-        shift: [.5kx + .5wing_hinge_width,-20]
+        shift: [.5kx + okx + .5wing_hinge_cutout_width, -20]
 
   pcb_outline:
     - name: swoop
     - operation: subtract
       name: wing_hinge_cutout
-      fillet: 4
+      fillet: outline_fillet
 
   combo:
     - name: pcb_outline
