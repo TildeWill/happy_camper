@@ -23,52 +23,22 @@ outlines:
       size: [ 140, 150 ]
       adjust:
         shift: [ -23, -30 ]
-    - operation: stack
-      name: switches
 
-  round_swoop:
+  wing_hinge_cutout:
+    - what: rectangle
+      where: wing_zone_right_num
+      size: [wing_hinge_width, 80]
+      adjust:
+        shift: [.5kx + .5wing_hinge_width,-20]
+
+  pcb_outline:
     - name: swoop
+    - operation: subtract
+      name: wing_hinge_cutout
       fillet: 4
 
-  flex_outline:
-    - what: polygon
-      fillet: 2
-      points:
-        - ref: wing_zone_right_mod
-          shift: [ 0, -oky ]
-        - ref: wing_zone_left_mod
-          shift: [ -okx, -oky ]
-        - ref: wing_zone_left_num
-          shift: [ -okx, oky ]
-        - ref: wing_zone_right_num
-          shift: [ okx, oky ]
-        - ref: wing_zone_right_mod
-          shift: [ okx, 0.5ky ]
-
-        - ref: matrix_zone_pinky_mod
-          shift: [ -okx, 0.5ky ]
-        - ref: matrix_zone_pinky_num
-          shift: [ -okx, oky ]
-        - ref: matrix_zone_ring_num
-          shift: [ 0, oky ]
-        - ref: matrix_zone_middle_num
-          shift: [ 0, oky ]
-        - ref: matrix_zone_index_num
-          shift: [ 0, oky ]
-        - ref: matrix_zone_inner_num
-          shift: [ okx, oky ]
-        - ref: matrix_zone_inner_bottom
-          shift: [ okx, -oky ]
-        - ref: matrix_zone_index_mod
-          shift: [ okx, -oky ]
-        - ref: matrix_zone_middle_mod
-          shift: [ 0, -oky ]
-        - ref: matrix_zone_ring_mod
-          shift: [ 0, -oky ]
-        - ref: matrix_zone_pinky_mod
-          shift: [ 0, -oky ]
   combo:
-    - name: flex_outline
+    - name: pcb_outline
     - operation: stack
       name: switches
 

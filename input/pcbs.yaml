@@ -2,7 +2,7 @@ pcbs:
   board:
     outlines:
       combo:
-        outline: flex_outline
+        outline: pcb_outline
     footprints:
       choc:
         what: choc
@@ -26,3 +26,6 @@ pcbs:
         adjust:
           shift: [ diode_shift_x, diode_shift_y ]
           rotate: 180
+      magnetic_connectors:
+        what: magnetic_vik_keyboard_connector
+        where: magnetic_connector_points

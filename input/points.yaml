@@ -43,7 +43,8 @@ points:
         home: null
         top: null
         num: null
-    module_zone:
+
+    module_key_zone:
       key:
         <<: *switch_settings
         splay: -16
@@ -58,6 +59,11 @@ points:
         right: null
       rows:
         thumb: null
+    module_zone:
+      anchor:
+        ref: module_key_zone_center_thumb
+        shift: [ 0,40 ]
+      key.tags: magnetic_connector_points
 
     swoop_point:
       anchor:
