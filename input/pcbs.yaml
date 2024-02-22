@@ -29,3 +29,5 @@ pcbs:
       magnetic_connectors:
         what: magnetic_vik_keyboard_connector
         where: magnetic_connector_points
+        adjust:
+          rotate: 45
