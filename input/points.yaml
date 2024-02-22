@@ -47,12 +47,13 @@ points:
     module_key_zone:
       key:
         <<: *switch_settings
-        splay: -16
-        origin: [ -10,-0 ]
-        spread: 20
+#        splay: -16
+#        origin: [ -10,-10 ]
+        spread: 1.2kx
       anchor:
         ref: matrix_zone_inner_mod
-        shift: [10,-10]
+        shift: [16,-10]
+        rotate: -15
       columns:
         left: null
         center: null
@@ -62,7 +63,7 @@ points:
     module_zone:
       anchor:
         ref: module_key_zone_center_thumb
-        shift: [ 0,40 ]
+        shift: [ 0,.5ky + oky + .5module_size ]
       key.tags: magnetic_connector_points
 
     center_point:

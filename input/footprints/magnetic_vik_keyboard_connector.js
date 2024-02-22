@@ -48,7 +48,7 @@ module.exports = {
             
             (fp_circle (center 0 0) (end 23 0) (width 0.1) (layer "F.SilkS"))
             (fp_circle (center 0 0) (end 27.5 0) (width 0.1) (layer "F.SilkS"))
-            (fp_rect (start -3 31.18) (end 3 50.49) (width 0.1) (layer "F.SilkS"))
+            ${'' /* (fp_rect (start -3 31.18) (end 3 50.49) (width 0.1) (layer "F.SilkS"))*/ }
          )   
         `
     return footprint;

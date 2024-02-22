@@ -22,6 +22,21 @@ outlines:
       where: center_point
       size: [ 7kx + 4okx + wing_hinge_cutout_width, 170 ]
 
+  module_outline:
+    - what: polygon
+      operation: stack
+      fillet: 4
+      points:
+        - ref: module_key_zone_right_thumb
+          shift: [ .5kx+okx, -0.5ky-oky ]
+        - ref: module_key_zone_right_thumb
+          shift: [ .5kx+okx, .5ky+oky+module_size ]
+        - ref: module_key_zone_left_thumb
+          shift: [ -.5kx-okx, .5ky+oky+module_size ]
+        - ref: module_key_zone_left_thumb
+          shift: [ -.5kx-okx, -.5ky-oky ]
+
+
   wing_hinge_cutout:
     - what: rectangle
       where: wing_zone_right_num
@@ -34,6 +49,8 @@ outlines:
     - operation: subtract
       name: wing_hinge_cutout
       fillet: outline_fillet
+    - operation: add
+      name: module_outline
 
   combo:
     - name: pcb_outline
