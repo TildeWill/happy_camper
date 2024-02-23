@@ -19,3 +19,4 @@ units:
   outline_fillet: 3
   wing_hinge_cutout_width: 2 * outline_fillet + 4
   module_size: 66
+  swoop_width: 7kx + 5okx + wing_hinge_cutout_width + mcu_width

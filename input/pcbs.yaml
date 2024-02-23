@@ -30,7 +30,42 @@ pcbs:
       magnetic_connectors:
         what: tildewill/magnetic_vik_keyboard_connector
         where: magnetic_connector_points
+        params:
+          V3V: 'VCC'
+          GND: 'GND'
+#          SDA: ''
+#          SCL: ''
+#          RGB_LED_OUT: ''
+          V5V: 'RAW'
+#          GPIO1: ''
+#          MOSI: ''
+#          GPIO2: ''
+#          SPI_CS: ''
+#          MISO: ''
+#          SCLK: ''
 
       mcu:
         what: tildewill/nice_nano
         where: mcu_center
+        params:
+          show_instructions: false,
+          P21: 'R0'
+          P20: 'R1'
+          P19: 'R2'
+          P18: 'R3'
+          P15: 'R4'
+          P14: 'C0'
+          P16: 'C1'
+          P10: 'C2'
+
+#          P1: ''
+#          P0: ''
+#          P2: ''
+#          P3: ''
+#          P4: ''
+#          P5: ''
+          P6: 'C6'
+          P7: 'C5'
+          P8: 'C4'
+          P9: 'C3'
+

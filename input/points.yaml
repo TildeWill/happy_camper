@@ -11,15 +11,24 @@ points:
         height: 1ky
         tags: "switches"
       columns:
-        left: null
+        left:
+          key:
+            column_net: C0
         right:
-          key.stagger: 3
+          key:
+            stagger: 3
+            column_net: C1
       rows:
-        mod: null
-        bottom: null
-        home: null
-        top: null
-        num: null
+        mod:
+          key.row_net: R0
+        bottom:
+          key.row_net: R1
+        home:
+          key.row_net: R2
+        top:
+          key.row_net: R3
+        num:
+          key.row_net: R4
     matrix_zone:
       key: *switch_settings
       anchor:
@@ -27,53 +36,70 @@ points:
         shift: [kx + 2okx + wing_hinge_cutout_width, 0]
       columns:
         pinky:
-          key.stagger: 3
+          key:
+            stagger: 3
+            column_net: C2
         ring:
-          key.stagger: 5
+          key:
+            stagger: 5
+            column_net: C3
         middle:
-          key.stagger: 3
+          key:
+            stagger: 3
+            column_net: C4
         index:
-          key.stagger: -3
+          key:
+            stagger: -3
+            column_net: C5
         inner:
-          key.stagger: -3
+          key:
+            stagger: -3
+            column_net: C6
           rows.mod.skip: true
       rows:
-        mod: null
-        bottom: null
-        home: null
-        top: null
-        num: null
-
-    mcu_center:
-      anchor:
-        ref: matrix_zone_inner_num
-        shift: [.5kx + .5mcu_width, .5ky+oky-.5mcu_height]
+        mod:
+          key.row_net: R0
+        bottom:
+          key.row_net: R1
+        home:
+          key.row_net: R2
+        top:
+          key.row_net: R3
+        num:
+          key.row_net: R4
 
     module_key_zone:
       key:
         <<: *switch_settings
-#        splay: -16
-#        origin: [ -10,-10 ]
-        spread: 1.2kx
+        splay: -16
+        origin: [ -10,-10 ]
+#        spread: 1.2kx
       anchor:
         ref: matrix_zone_inner_mod
-        shift: [16,-10]
+        shift: [10,-10]
         rotate: -15
       columns:
         left: null
-        center: null
+        middle: null
         right: null
       rows:
         thumb: null
+
     module_zone:
       anchor:
-        ref: module_key_zone_center_thumb
+        ref: module_key_zone_middle_thumb
         shift: [ 0,.5ky + oky + .5module_size ]
       key.tags: magnetic_connector_points
+
+    mcu_center:
+      anchor:
+        ref: matrix_zone_inner_num
+        shift: [.5kx + okx + .5mcu_width, -10]
 
     center_point:
       anchor:
         ref.aggregate.parts: [wing_zone_left_num, wing_zone_left_mod, matrix_zone_inner_num, matrix_zone_inner_mod]
+
     top_point:
       anchor:
         ref: matrix_zone_middle_num

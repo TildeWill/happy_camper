@@ -4,6 +4,11 @@ outlines:
       where: switches
       size: [kx-0.5,ky-0.5]
 
+  mcu:
+    - what: rectangle
+      where: mcu_center
+      size: [mcu_width, mcu_height]
+
   swoop:
     - what: circle
       where: top_point
@@ -18,22 +23,24 @@ outlines:
         shift: [ 0,-swoop_radius - 5.5ky - oky ]
     - operation: intersect
       what: rectangle
-      where: center_point
-      size: [ 7kx + 4okx + wing_hinge_cutout_width, 170 ]
+      where:
+        ref: wing_zone_left_num
+        shift:  [-.5kx - okx + .5swoop_width, -20]
+      size: [ swoop_width, 170 ]
 
   module_outline:
     - what: polygon
       operation: stack
       fillet: 4
       points:
-        - ref: module_key_zone_right_thumb
-          shift: [ .5kx+okx, -0.5ky-oky ]
-        - ref: module_key_zone_right_thumb
-          shift: [ .5kx+okx, .5ky+oky+module_size ]
-        - ref: module_key_zone_left_thumb
-          shift: [ -.5kx-okx, .5ky+oky+module_size ]
-        - ref: module_key_zone_left_thumb
-          shift: [ -.5kx-okx, -.5ky-oky ]
+        - ref: module_key_zone_middle_thumb
+          shift: [ 1.5kx+2okx, -0.5ky-2oky ]
+        - ref: module_key_zone_middle_thumb
+          shift: [ 1.5kx+2okx, .5ky+oky+module_size ]
+        - ref: module_key_zone_middle_thumb
+          shift: [ -1.5kx-2okx, .5ky+oky+module_size ]
+        - ref: module_key_zone_middle_thumb
+          shift: [ -1.5kx-2okx, -.5ky-2oky ]
 
 
   wing_hinge_cutout:
@@ -55,4 +62,6 @@ outlines:
     - name: pcb_outline
     - operation: stack
       name: switches
+    - operation: stack
+      name: mcu
 
