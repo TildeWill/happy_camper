@@ -4,7 +4,6 @@ outlines:
       where: switches
       size: [kx-0.5,ky-0.5]
 
-
   swoop:
     - what: circle
       where: top_point

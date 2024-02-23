@@ -1,0 +1,3 @@
+[submodule "input/footprints/tildewill"]
+	path = input/footprints/tildewill
+	url = git@github.com:tildewill/ergogen_footprints.git

@@ -5,7 +5,7 @@ pcbs:
         outline: pcb_outline
     footprints:
       choc:
-        what: choc
+        what: tildewill/choc
         where: switches
         params:
           show_keycaps: true
@@ -15,7 +15,7 @@ pcbs:
           from: "{{column_net}}"
           to: "{{colrow}}"
       diode:
-        what: diode
+        what: tildewill/diode
         where: switches
         params:
           include_tht: true
@@ -26,6 +26,11 @@ pcbs:
         adjust:
           shift: [ diode_shift_x, diode_shift_y ]
           rotate: 180
+
       magnetic_connectors:
-        what: magnetic_vik_keyboard_connector
+        what: tildewill/magnetic_vik_keyboard_connector
         where: magnetic_connector_points
+
+      mcu:
+        what: tildewill/nice_nano
+        where: mcu_center

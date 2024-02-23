@@ -44,6 +44,11 @@ points:
         top: null
         num: null
 
+    mcu_center:
+      anchor:
+        ref: matrix_zone_inner_num
+        shift: [.5kx + .5mcu_width, .5ky+oky-.5mcu_height]
+
     module_key_zone:
       key:
         <<: *switch_settings
