@@ -27,6 +27,14 @@ pcbs:
           shift: [ diode_shift_x, diode_shift_y ]
           rotate: 180
 
+      battery:
+        what: tildewill/battery_connector_jst_ph_2
+        where: battery_center
+        params:
+          reversible: true
+#          BAT_P: ''
+#          BAT_N: ''
+
       magnetic_connectors:
         what: tildewill/magnetic_vik_keyboard_connector
         where: magnetic_connector_points

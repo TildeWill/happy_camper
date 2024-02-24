@@ -77,7 +77,7 @@ points:
       anchor:
         ref: matrix_zone_inner_mod
         shift: [10,-10]
-        rotate: -15
+        rotate: -5
       columns:
         left: null
         middle: null
@@ -93,8 +93,13 @@ points:
 
     mcu_center:
       anchor:
-        ref: matrix_zone_inner_num
-        shift: [.5kx + okx + .5mcu_width, -10]
+        ref: module_key_zone_middle_thumb
+        shift: [-20, 60]
+
+    battery_center:
+      anchor:
+        ref: mcu_center
+        shift: [40,0]
 
     center_point:
       anchor:
