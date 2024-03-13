@@ -46,7 +46,7 @@ outlines:
   wing_hinge_cutout:
     - what: rectangle
       where: wing_zone_right_num
-      size: [wing_hinge_cutout_width, 80]
+      size: [wing_hinge_cutout_width, 150]
       adjust:
         shift: [.5kx + okx + .5wing_hinge_cutout_width, -20]
 
@@ -57,6 +57,19 @@ outlines:
       fillet: outline_fillet
     - operation: add
       name: module_outline
+    - operation: add
+      what: rectangle
+      where:
+        ref: wing_rat_bites_left_edge_top
+        shift: [ .5wing_hinge_cutout_width, 0 ]
+      size: [ wing_hinge_cutout_width+2, wing_hinge_cutout_width ]
+    - operation: add
+      what: rectangle
+      where:
+        ref: wing_rat_bites_left_edge_bottom
+        shift: [ .5wing_hinge_cutout_width, 0 ]
+      size: [ wing_hinge_cutout_width+2, wing_hinge_cutout_width ]
+
 
   combo:
     - name: pcb_outline

@@ -29,6 +29,7 @@ points:
           key.row_net: R3
         num:
           key.row_net: R4
+
     matrix_zone:
       key: *switch_settings
       anchor:
@@ -89,7 +90,10 @@ points:
       anchor:
         ref: module_key_zone_middle_thumb
         shift: [ 0,.5ky + oky + .5module_size ]
-      key.tags: magnetic_connector_points
+
+    magnetic_connector_point:
+      anchor:
+        ref: module_zone
 
     mcu_center:
       anchor:
@@ -109,3 +113,18 @@ points:
       anchor:
         ref: matrix_zone_middle_num
         shift: [0, .5kx+okx]
+
+    wing_rat_bites:
+      key:
+        spread: wing_hinge_cutout_width
+        padding: -2ky
+        tags: rat_bite_points
+      anchor:
+        ref: wing_zone_right_top
+        shift: [ .5kx + okx, 0 ]
+      columns:
+        left_edge:
+        right_edge:
+      rows:
+        top:
+        bottom:

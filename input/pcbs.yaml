@@ -35,9 +35,15 @@ pcbs:
 #          BAT_P: ''
 #          BAT_N: ''
 
+      rat_bites:
+        what: rat_bite
+        where: rat_bite_points
+        adjust:
+          rotate: 90
+
       magnetic_connectors:
-        what: tildewill/magnetic_vik_keyboard_connector
-        where: magnetic_connector_points
+        what: shit
+        where: magnetic_connector_point
         params:
           V3V: 'VCC'
           GND: 'GND'

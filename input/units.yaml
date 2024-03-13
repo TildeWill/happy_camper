@@ -17,6 +17,6 @@ units:
 
   swoop_radius: 300
   outline_fillet: 3
-  wing_hinge_cutout_width: 2 * outline_fillet + 4
+  wing_hinge_cutout_width: 6
   module_size: 66
   swoop_width: 7kx + 4okx + wing_hinge_cutout_width
