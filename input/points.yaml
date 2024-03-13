@@ -74,19 +74,17 @@ points:
         <<: *switch_settings
       anchor:
         ref: matrix_zone_inner_mod
-        shift: [.5kx + okx + breakaway_tab_width + .5module_zone_width, 0]
+        shift: [-.5kx + okx + breakaway_tab_width + .5module_zone_width, 0]
       columns:
-        middle: # middle first because it's the one that is perpendicular to everything
-          key:
-            splay:
         left:
           key:
-            shift: [-2kx-okx, -oky]
+            shift: [-okx, -oky]
             rotate: module_splay
+        middle: null
         right:
           key:
             rotate: -module_splay
-            shift: [-1kx+okx, -oky]
+            shift: [okx, -oky]
       rows:
         thumb:
 
