@@ -34,26 +34,26 @@ outlines:
       fillet: 4
       points:
         - ref: module_key_zone_middle_thumb
-          shift: [ 1.5kx+2okx, -0.5ky-2oky ]
+          shift: [ .5module_zone_width, -0.5ky-2oky ]
         - ref: module_key_zone_middle_thumb
-          shift: [ 1.5kx+2okx, .5ky+oky+module_size ]
+          shift: [ .5module_zone_width, .5ky+oky+module_size ]
         - ref: module_key_zone_middle_thumb
-          shift: [ -1.5kx-2okx, .5ky+oky+module_size ]
+          shift: [ -.5module_zone_width, .5ky+oky+module_size ]
         - ref: module_key_zone_middle_thumb
-          shift: [ -1.5kx-2okx, -.5ky-2oky ]
+          shift: [ -.5module_zone_width, -.5ky-2oky ]
 
 
-  wing_hinge_cutout:
+  wing_tab_cutout:
     - what: rectangle
       where: wing_zone_right_num
-      size: [wing_hinge_cutout_width, 150]
+      size: [breakaway_tab_width, 150]
       adjust:
-        shift: [.5kx + okx + .5wing_hinge_cutout_width, -20]
+        shift: [.5kx + okx + .5breakaway_tab_width, -20]
 
   pcb_outline:
     - name: swoop
     - operation: subtract
-      name: wing_hinge_cutout
+      name: wing_tab_cutout
       fillet: outline_fillet
     - operation: add
       name: module_outline
@@ -61,14 +61,26 @@ outlines:
       what: rectangle
       where:
         ref: wing_rat_bites_left_edge_top
-        shift: [ .5wing_hinge_cutout_width, 0 ]
-      size: [ wing_hinge_cutout_width+2, wing_hinge_cutout_width ]
+        shift: [ .5breakaway_tab_width, 0 ]
+      size: [ breakaway_tab_width+2, breakaway_tab_width ]
     - operation: add
       what: rectangle
       where:
         ref: wing_rat_bites_left_edge_bottom
-        shift: [ .5wing_hinge_cutout_width, 0 ]
-      size: [ wing_hinge_cutout_width+2, wing_hinge_cutout_width ]
+        shift: [ .5breakaway_tab_width, 0 ]
+      size: [ breakaway_tab_width+2, breakaway_tab_width ]
+    - operation: add
+      what: rectangle
+      where:
+        ref: module_rat_bites_left_edge_top
+        shift: [ .5breakaway_tab_width, 0 ]
+      size: [ breakaway_tab_width+2, breakaway_tab_width ]
+    - operation: add
+      what: rectangle
+      where:
+        ref: module_rat_bites_left_edge_bottom
+        shift: [ .5breakaway_tab_width, 0 ]
+      size: [ breakaway_tab_width+2, breakaway_tab_width ]
 
 
   combo:

@@ -34,7 +34,7 @@ points:
       key: *switch_settings
       anchor:
         ref: wing_zone_right_mod
-        shift: [kx + 2okx + wing_hinge_cutout_width, 0]
+        shift: [kx + 2okx + breakaway_tab_width, 0]
       columns:
         pinky:
           key:
@@ -72,19 +72,23 @@ points:
     module_key_zone:
       key:
         <<: *switch_settings
-        splay: -16
-        origin: [ -10,-10 ]
-#        spread: 1.2kx
       anchor:
         ref: matrix_zone_inner_mod
-        shift: [10,-10]
-        rotate: -5
+        shift: [.5kx + okx + breakaway_tab_width + .5module_zone_width, 0]
       columns:
-        left: null
-        middle: null
-        right: null
+        middle: # middle first because it's the one that is perpendicular to everything
+          key:
+            splay:
+        left:
+          key:
+            shift: [-2kx-okx, -oky]
+            rotate: module_splay
+        right:
+          key:
+            rotate: -module_splay
+            shift: [-1kx+okx, -oky]
       rows:
-        thumb: null
+        thumb:
 
     module_zone:
       anchor:
@@ -116,11 +120,26 @@ points:
 
     wing_rat_bites:
       key:
-        spread: wing_hinge_cutout_width
+        spread: breakaway_tab_width
         padding: -2ky
         tags: rat_bite_points
       anchor:
         ref: wing_zone_right_top
+        shift: [ .5kx + okx, 0 ]
+      columns:
+        left_edge:
+        right_edge:
+      rows:
+        top:
+        bottom:
+
+    module_rat_bites:
+      key:
+        spread: breakaway_tab_width
+        padding: -2ky
+        tags: rat_bite_points
+      anchor:
+        ref: matrix_zone_inner_top
         shift: [ .5kx + okx, 0 ]
       columns:
         left_edge:
