@@ -12,16 +12,17 @@ pcbs:
           reverse: true
           hotswap: true
           solder: false
-          from: "{{column_net}}"
-          to: "{{colrow}}"
+          from: "{{my_column_net}}"
+          to: "{{col.name}}_{{row}}"
+
       diode:
         what: ceoloide/diode_tht_sod123
         where: switches
         params:
           reversible: true
           include_tht: false
-          from: "{{colrow}}"
-          to: "{{row_net}}"
+          from: "{{col.name}}_{{row}}"
+          to: "{{my_row_net}}"
         adjust:
           shift: [ diode_shift_x, diode_shift_y ]
           rotate: 180
@@ -39,6 +40,23 @@ pcbs:
         where: rat_bite_points
         adjust:
           rotate: 90
+
+      ffc_connectors:
+        what: ffc_12p_connector
+        where: ffc
+        params:
+          P1: "{{my_p1}}"
+          P2: "{{my_p2}}"
+          P3: "{{my_p3}}"
+          P4: "{{my_p4}}"
+          P5: "{{my_p5}}"
+          P6: "{{my_p6}}"
+          P7: "{{my_p7}}"
+          P8: "{{my_p8}}"
+          P9: "{{my_p9}}"
+          P10: "{{my_p10}}"
+          P11: "{{my_p11}}"
+          P12: "{{my_p12}}"
 
       magnetic_connectors:
         what: shit
