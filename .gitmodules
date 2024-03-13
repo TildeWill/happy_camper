@@ -1,3 +1,6 @@
 [submodule "input/footprints/tildewill"]
 	path = input/footprints/tildewill
 	url = git@github.com:tildewill/ergogen_footprints.git
+[submodule "input/footprints/ceoloide"]
+	path = input/footprints/ceoloide
+	url = git@github.com:ceoloide/ergogen-footprints.git

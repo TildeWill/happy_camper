@@ -15,14 +15,13 @@ pcbs:
           from: "{{column_net}}"
           to: "{{colrow}}"
       diode:
-        what: tildewill/diode
+        what: ceoloide/diode_tht_sod123
         where: switches
         params:
-          include_tht: true
-          side: back
+          reversible: true
+          include_tht: false
           from: "{{colrow}}"
           to: "{{row_net}}"
-          designator: "D"
         adjust:
           shift: [ diode_shift_x, diode_shift_y ]
           rotate: 180
