@@ -74,18 +74,19 @@ points:
         <<: *switch_settings
       anchor:
         ref: matrix_zone_inner_mod
-        shift: [-.5kx + okx + breakaway_tab_width + .5module_zone_width, 0]
+        shift: [14, -4]
+        rotate: -23
       columns:
         left:
-          my_column_net: C4
           key:
+            my_column_net: C4
             shift: [-okx, -oky]
             rotate: module_splay
         middle:
-          my_column_net: C5
+          key.my_column_net: C5
         right:
-          my_column_net: C6
           key:
+            my_column_net: C6
             rotate: -module_splay
             shift: [okx, -oky]
       rows:
@@ -150,37 +151,3 @@ points:
         top:
         bottom:
 
-    wing_ffc:
-      anchor:
-        ref: wing_zone_right_home
-        shift: [.5kx + okx, 0]
-      key.tags: ffc
-      columns:
-        left:
-          key:
-            rotate: 90
-            my_p1: 'WC0'
-            my_p2: 'WC1'
-            my_p8: 'WR0'
-            my_p9: 'WR1'
-            my_p10: 'WR2'
-            my_p11: 'WR3'
-            my_p12: 'WR4'
-        right:
-          key:
-            rotate: 90
-            my_p1: 'XC0'
-            my_p2: 'XC1'
-            my_p3: 'XC2'
-            my_p4: 'XC3'
-            my_p5: 'XC4'
-            my_p6: 'XC5'
-            my_p7: 'XC6'
-            my_p8: 'XR0'
-            my_p9: 'XR1'
-            my_p10: 'XR2'
-            my_p11: 'XR3'
-            my_p12: 'XR4'
-
-      rows:
-        connector:

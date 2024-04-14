@@ -27,6 +27,23 @@ outlines:
         ref: wing_zone_left_num
         shift:  [-.5kx - okx + .5swoop_width, -20]
       size: [ swoop_width, 170 ]
+    - operation: add
+      what: polygon
+      points:
+        - ref: matrix_zone_inner_bottom
+          shift: [0, -1.5ky - oky]
+        - ref: matrix_zone_inner_bottom
+          shift: [1.5kx, 1.5ky + 2oky]
+        - ref: matrix_zone_inner_num
+    - operation: subtract
+      what: polygon
+      points:
+        - ref: matrix_zone_inner_bottom
+          shift: [0, -1.5ky - 2oky]
+        - ref: matrix_zone_inner_bottom
+          shift: [1kx, .5ky + oky]
+        - ref: matrix_zone_inner_bottom
+          shift: [2kx, -3ky]
 
   module_outline:
     - what: polygon
