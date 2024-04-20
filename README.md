@@ -1,5 +1,5 @@
-# The Happy Camper
-A mechanical keyboard that has built in tenting
+# The Happy Camper <img src="images/noun-camping-4217079.svg" width="150" align="right" style="filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(80%) contrast(80%);" />
+A mechanical keyboard that has built-in tenting
 
 ## Layout
 * Physical layout is declared by me using [Ergogen](https://github.com/mrzealot/ergogen/)'s syntax.
