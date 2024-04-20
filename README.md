@@ -1,4 +1,5 @@
-# Zaya Mechanical Keyboard
+# The Happy Camper
+A mechanical keyboard that has built in tenting
 
 ## Layout
 * Physical layout is declared by me using [Ergogen](https://github.com/mrzealot/ergogen/)'s syntax.
@@ -14,7 +15,7 @@
 
 ## Features and Design Considerations
 - Thin to avoid the need for a wrist rest
-- Choc switches because there are a lot of options. Low profile Gateron switches were considered, but they're too new and the ecosystem around them is still growing
+- Choc switches because there are a lot of options. Low profile Gateron switches were considered, but they're too new and the surrounding ecosystem is still growing
 - Hot swap sockets because the flex PCB is not something you want to resolder
 - Flex PCB to accommodate the connections across the constant torque/friction hinges
 - Reversible to cut down on costs; Flex PCB is not cheap
@@ -24,7 +25,7 @@
 To install node modules to get your environment ready, run:  
 `make setup`
 
-To generate gerbers, case STLs, and images with the PCB already routed for you  
+To generate Gerbers, case STLs, and images with the PCB already routed for you  
 `make clean all`
 
 If you need to iterate more quickly, `preview` will skip the routing step  
