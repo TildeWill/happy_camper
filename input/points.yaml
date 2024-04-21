@@ -74,8 +74,8 @@ points:
         <<: *switch_settings
       anchor:
         ref: matrix_zone_inner_mod
-        shift: [21.5 + breakaway_tab_width, 0]
-        orient: -23
+        shift: [24.2 + breakaway_tab_width, 0]
+        orient: module_rotation
       columns:
         left:
           key:

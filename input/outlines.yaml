@@ -9,6 +9,18 @@ outlines:
       where: mcu_center
       size: [mcu_width, mcu_height]
 
+  swoop_cutout:
+      - what: rectangle
+        size: [ swoop_width, 170 ]
+        where:
+          ref: wing_zone_left_num
+          shift:  [-.5kx - okx + .5swoop_width, -20]
+      - operation: add
+        what: rectangle
+        size: [ 40, 170 ]
+        where:
+          ref: matrix_zone_inner_bottom
+          rotate: module_rotation
   swoop:
     - what: circle
       where: top_point
@@ -22,28 +34,8 @@ outlines:
       adjust:
         shift: [ 0,-swoop_radius - 5.5ky - oky ]
     - operation: intersect
-      what: rectangle
-      where:
-        ref: wing_zone_left_num
-        shift:  [-.5kx - okx + .5swoop_width, -20]
-      size: [ swoop_width, 170 ]
-    - operation: add
-      what: polygon
-      points:
-        - ref: matrix_zone_inner_bottom
-          shift: [0, -1.5ky - oky]
-        - ref: matrix_zone_inner_bottom
-          shift: [1.5kx, 1.5ky + 2oky]
-        - ref: matrix_zone_inner_num
-    - operation: subtract
-      what: polygon
-      points:
-        - ref: matrix_zone_inner_bottom
-          shift: [0, -1.5ky - 2oky]
-        - ref: matrix_zone_inner_bottom
-          shift: [1kx, .5ky + oky]
-        - ref: matrix_zone_inner_bottom
-          shift: [2kx, -3ky]
+      name: swoop_cutout
+
 
   module_outline:
     - what: polygon
@@ -60,17 +52,28 @@ outlines:
           shift: [ -.5module_zone_width, -.5ky-2oky ]
 
 
-  wing_tab_cutout:
+  wing-matrix_tab_cutout:
     - what: rectangle
-      where: wing_zone_right_num
       size: [breakaway_tab_width, 150]
+      where: wing_zone_right_num
       adjust:
         shift: [.5kx + okx + .5breakaway_tab_width, -20]
+
+  matrix-module_tab_cutout:
+    - what: rectangle
+      size: [ breakaway_tab_width, 150 ]
+      where:
+        ref: matrix_zone_inner_bottom
+        rotate: module_rotation
+        shift: [.5kx + okx + .5breakaway_tab_width, -.5ky] # okx to the right of the bottom right corner of the inner_bottom key
 
   pcb_outline:
     - name: swoop
     - operation: subtract
-      name: wing_tab_cutout
+      name: wing-matrix_tab_cutout
+      fillet: outline_fillet
+    - operation: subtract
+      name: matrix-module_tab_cutout
       fillet: outline_fillet
     - operation: add
       name: module_outline

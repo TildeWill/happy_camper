@@ -21,4 +21,5 @@ units:
   module_size: 66
   module_splay: 16
   module_zone_width: 3kx+4okx
+  module_rotation: -23
   swoop_width: 7kx + 4okx + breakaway_tab_width
