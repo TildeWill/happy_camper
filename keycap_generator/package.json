@@ -1,9 +1,8 @@
 {
     "scripts": {},
     "dependencies": {
-        "@alexlafroscia/yaml-merge": "^4.1.0",
-        "@jscad/modeling": "^2.12.1",
         "@jscad/cli": "^2.3.1",
-        "ergogen": "github:ergogen/ergogen"
+        "@jscad/modeling": "^2.12.1",
+        "@jscad/svg-deserializer": "^2.5.7"
     }
 }

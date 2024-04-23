@@ -1,12 +1,13 @@
-const jscad = require('@jscad/modeling')
-const { cylinder } = jscad.primitives
+const { extrudeLinear } = require('@jscad/modeling').extrusions
+const svgDeserializer = require('@jscad/svg-deserializer')
 
-const hex = (radius, height) => {
-    return cylinder({radius, height, segments: 6})
-}
 
 const main = () => {
-    return hex(6, 2)
+    const rawData = fs.readFileSync('fonts/number-small-7-svgrepo-com.svg')
+    const geometry = svgDeserializer.deserialize({ filename: 'file.svg', output: 'geometry' }, rawData)
+    const paths = outlines.map((segment) => segmentToPath(segment))
+
+    return extrudeLinear({ height: 15 }, paths)
 }
 
-module.exports = { main }
+module.exports = {main}
