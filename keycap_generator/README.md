@@ -15,3 +15,7 @@ Use https://github.com/skarab42/jscad-vector-fonts?tab=readme-ov-file to convert
 .8mm per color layer is too thick for anything
 
 The top layer is currently sharpest, though may be fixed by partial CMY infills, rather than all white
+
+## Other Notes
+- Old conversation about using [opentype.js to make 2D paths from font files](https://github.com/jscad/OpenJSCAD.org/issues/72)
+- As of 2022, it seemes like [jscad-text](https://github.com/jscad-community/jscad-text) is the go-to, but it isn't hosted on npm
