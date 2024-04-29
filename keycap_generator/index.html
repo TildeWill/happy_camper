@@ -23,6 +23,8 @@
 <script type="module">
 
     import * as THREE from 'three';
+    import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg';
+    // import { MeshStandardMaterial, Mesh, SphereGeometry, BoxGeometry } from 'three';
 
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { STLExporter } from 'three/addons/exporters/STLExporter.js';
@@ -75,21 +77,7 @@
 
         // cyan
         mesh_cyan = makeLayer(0x00FFFF, 0);
-        scene.add( mesh_cyan );
-
-        const loader = new FontLoader();
-        loader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
-            let textObj;
-            textObj = new TextGeometry('%', {
-                font: font,
-                size: 3,
-                height: 0.3,
-                curveSegments: 100,
-            });
-            const material = new THREE.MeshBasicMaterial({color: 'red'});
-            let mesh = new THREE.Mesh(textObj, material);
-            scene.add(mesh);
-        });
+        // scene.add( mesh_cyan );
 
         // // magenta
         // mesh_magenta = makeLayer(0xFF00FF, 0.3);
@@ -128,10 +116,48 @@
     }
 
     function makeLayer(color, offset, thickness=0.3, ) {
-        const geometry = new THREE.BoxGeometry(5, 5, 0.3);
+
+        const boxGeometry = new THREE.BoxGeometry(5, 5, thickness);
+
+        const fontLoader = new FontLoader();
+        let charGeometry;
+        fontLoader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
+            charGeometry = new TextGeometry('%', {
+                font: font,
+                size: 3,
+                depth: thickness*2,
+                curveSegments: 100,
+            });
+
+            const boxBrush = new Brush( boxGeometry );
+            boxBrush.updateMatrixWorld();
+
+            const charBrush = new Brush( charGeometry );
+            charBrush.position.z = -thickness;
+            charBrush.updateMatrixWorld();
+
+            const evaluator = new Evaluator();
+            let subtractedMesh = evaluator.evaluate( boxBrush, charBrush, SUBTRACTION );
+            subtractedMesh.castShadow = true;
+            subtractedMesh.position.z = offset;
+            subtractedMesh.material =  new THREE.MeshBasicMaterial({color: 0x00FFFF});
+
+            scene.add(subtractedMesh);
+        });
+
+
+
+
+
+
+
+
+
+
+
         const material = new THREE.MeshPhongMaterial( { color: color } );
 
-        let mesh = new THREE.Mesh( geometry, material );
+        let mesh = new THREE.Mesh( boxGeometry, material );
         mesh.castShadow = true;
         mesh.position.z = offset;
         return mesh;

@@ -1,7 +1,8 @@
 {
     "scripts": {},
     "dependencies": {
-        "three": "^0.164.1"
+        "three": "^0.164.1",
+        "three-bvh-csg": "^0.0.16"
     },
     "devDependencies": {
         "vite": "^5.2.10"
