@@ -35,10 +35,10 @@
 
     let scene, camera, renderer, exporter, mesh_cyan, mesh_magenta, mesh_yellow, mesh_white;
 
-    init();
+    await init();
     animate();
 
-    function init() {
+    async function init() {
 
         camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 100 );
         camera.position.set( 4, 2, 4 );
@@ -76,24 +76,15 @@
         grid.material.transparent = true;
         scene.add( grid );
 
-        // cyan
-        makeLayer("cyan", 0, 0.3, "W");
-        makeLayer("yellow", 0.3, 0.3, "7")
-        makeLayer("magenta", 0.6, 0.3, "%")
+        // layers
+        mesh_cyan = await makeLayer("cyan", 0, 0.3, "W");
+        scene.add(mesh_cyan);
+        mesh_yellow = await makeLayer("yellow", 0.3, 0.3, "7")
+        scene.add(mesh_yellow)
+        mesh_magenta = await makeLayer("magenta", 0.6, 0.3, "%")
+        scene.add(mesh_magenta)
 
-        // // magenta
-        // mesh_magenta = makeLayer(0xFF00FF, 0.3);
-        // scene.add( mesh_magenta );
         //
-        // // yellow
-        // mesh_yellow = makeLayer(0xFFFF00, 0.6);
-        // scene.add( mesh_yellow );
-        //
-        // // white
-        // mesh_white = makeLayer(0xFFFFFF, 0.9, 0.4);
-        // scene.add( mesh_white );
-
-
         renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( window.innerWidth, window.innerHeight );
@@ -123,34 +114,35 @@
 
         const fontLoader = new FontLoader();
         let charGeometry;
-        fontLoader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
-            charGeometry = new TextGeometry(character, {
-                font: font,
-                size: 4,
-                depth: thickness*2,
-                curveSegments: 20,
-            });
-            charGeometry.computeBoundingBox();
-            let charCenter = charGeometry.boundingBox.getCenter(new Vector3());
+        let url = './fonts/helvetiker_regular.typeface.json'
+        const font = await new Promise(resolve => fontLoader.load(url, resolve))
 
-            const boxBrush = new Brush( boxGeometry );
-            boxBrush.updateMatrixWorld();
-
-            const charBrush = new Brush( charGeometry );
-            charBrush.position.x = -charCenter.x
-            charBrush.position.y = -charCenter.y
-            charBrush.position.z = -thickness;
-            charBrush.updateMatrixWorld();
-
-            const evaluator = new Evaluator();
-            let subtractedMesh = evaluator.evaluate( boxBrush, charBrush, SUBTRACTION );
-            subtractedMesh.castShadow = true;
-            subtractedMesh.position.z = offset;
-            subtractedMesh.material =  new THREE.MeshPhongMaterial({color: color});
-
-            // return subtractedMesh;
-            scene.add(subtractedMesh);
+        charGeometry = new TextGeometry(character, {
+            font: font,
+            size: 4,
+            depth: thickness*2,
+            curveSegments: 20,
         });
+        charGeometry.computeBoundingBox();
+        let charCenter = charGeometry.boundingBox.getCenter(new Vector3());
+
+        const boxBrush = new Brush( boxGeometry );
+        boxBrush.updateMatrixWorld();
+
+        const charBrush = new Brush( charGeometry );
+        charBrush.position.x = -charCenter.x
+        charBrush.position.y = -charCenter.y
+        charBrush.position.z = -thickness;
+        charBrush.updateMatrixWorld();
+
+        const evaluator = new Evaluator();
+        let subtractedMesh = evaluator.evaluate( boxBrush, charBrush, SUBTRACTION );
+        subtractedMesh.castShadow = true;
+        subtractedMesh.position.z = offset;
+        subtractedMesh.material =  new THREE.MeshPhongMaterial({color: color});
+
+        return subtractedMesh;
+        // scene.add(subtractedMesh);
     }
 
     function onWindowResize() {
