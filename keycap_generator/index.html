@@ -77,8 +77,9 @@
         scene.add( grid );
 
         // cyan
-        mesh_cyan = makeLayer(0x00FFFF, 0);
-        // scene.add( mesh_cyan );
+        makeLayer("cyan", 0, 0.3, "W")
+        makeLayer("yellow", 0.3, 0.3, "7")
+        makeLayer("magenta", 0.6, 0.3, "%")
 
         // // magenta
         // mesh_magenta = makeLayer(0xFF00FF, 0.3);
@@ -116,16 +117,16 @@
 
     }
 
-    function makeLayer(color, offset, thickness=0.3, ) {
+    async function makeLayer(color, offset, thickness=0.3, character="W") {
 
-        const boxGeometry = new THREE.BoxGeometry(5, 5, thickness);
+        const boxGeometry = new THREE.BoxGeometry(5.5, 5.5, thickness);
 
         const fontLoader = new FontLoader();
         let charGeometry;
         fontLoader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
-            charGeometry = new TextGeometry('%', {
+            charGeometry = new TextGeometry(character, {
                 font: font,
-                size: 3,
+                size: 4,
                 depth: thickness*2,
                 curveSegments: 20,
             });
@@ -145,8 +146,9 @@
             let subtractedMesh = evaluator.evaluate( boxBrush, charBrush, SUBTRACTION );
             subtractedMesh.castShadow = true;
             subtractedMesh.position.z = offset;
-            subtractedMesh.material =  new THREE.MeshBasicMaterial({color: 0x00FFFF});
+            subtractedMesh.material =  new THREE.MeshBasicMaterial({color: color});
 
+            // return subtractedMesh;
             scene.add(subtractedMesh);
         });
 
