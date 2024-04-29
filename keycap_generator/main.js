@@ -27,7 +27,6 @@ loader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
     const material = new THREE.MeshBasicMaterial({color: 'red'});
     mesh = new THREE.Mesh(textObj, material);
     scene.add(mesh);
-    console.log('foo');
 });
 
 

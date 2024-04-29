@@ -27,8 +27,10 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { STLExporter } from 'three/addons/exporters/STLExporter.js';
     import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+    import {FontLoader} from "three/addons";
+    import {TextGeometry} from "three/addons/geometries/TextGeometry.js";
 
-    let scene, camera, renderer, exporter, mesh;
+    let scene, camera, renderer, exporter, mesh_cyan, mesh_magenta, mesh_yellow, mesh_white;
 
     init();
     animate();
@@ -71,17 +73,36 @@
         grid.material.transparent = true;
         scene.add( grid );
 
-        // export mesh
+        // cyan
+        mesh_cyan = makeLayer(0x00FFFF, 0);
+        scene.add( mesh_cyan );
 
-        const geometry = new THREE.BoxGeometry(5, 5, 0.3);
-        const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+        const loader = new FontLoader();
+        loader.load('./fonts/helvetiker_regular.typeface.json', function (font) {
+            let textObj;
+            textObj = new TextGeometry('%', {
+                font: font,
+                size: 3,
+                height: 0.3,
+                curveSegments: 100,
+            });
+            const material = new THREE.MeshBasicMaterial({color: 'red'});
+            let mesh = new THREE.Mesh(textObj, material);
+            scene.add(mesh);
+        });
 
-        mesh = new THREE.Mesh( geometry, material );
-        mesh.castShadow = true;
-        mesh.position.y = 0.5;
-        scene.add( mesh );
-
+        // // magenta
+        // mesh_magenta = makeLayer(0xFF00FF, 0.3);
+        // scene.add( mesh_magenta );
         //
+        // // yellow
+        // mesh_yellow = makeLayer(0xFFFF00, 0.6);
+        // scene.add( mesh_yellow );
+        //
+        // // white
+        // mesh_white = makeLayer(0xFFFFFF, 0.9, 0.4);
+        // scene.add( mesh_white );
+
 
         renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setPixelRatio( window.devicePixelRatio );
@@ -106,6 +127,16 @@
 
     }
 
+    function makeLayer(color, offset, thickness=0.3, ) {
+        const geometry = new THREE.BoxGeometry(5, 5, 0.3);
+        const material = new THREE.MeshPhongMaterial( { color: color } );
+
+        let mesh = new THREE.Mesh( geometry, material );
+        mesh.castShadow = true;
+        mesh.position.z = offset;
+        return mesh;
+    }
+
     function onWindowResize() {
 
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -124,14 +155,14 @@
 
     function exportASCII() {
 
-        const result = exporter.parse( mesh );
+        const result = exporter.parse( mesh_cyan );
         saveString( result, 'box.stl' );
 
     }
 
     function exportBinary() {
 
-        const result = exporter.parse( mesh, { binary: true } );
+        const result = exporter.parse( mesh_cyan, { binary: true } );
         saveArrayBuffer( result, 'box.stl' );
 
     }
