@@ -31,6 +31,7 @@
     import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
     import {FontLoader} from "three/addons";
     import {TextGeometry} from "three/addons/geometries/TextGeometry.js";
+    import {Vector3} from "three";
 
     let scene, camera, renderer, exporter, mesh_cyan, mesh_magenta, mesh_yellow, mesh_white;
 
@@ -126,13 +127,17 @@
                 font: font,
                 size: 3,
                 depth: thickness*2,
-                curveSegments: 100,
+                curveSegments: 20,
             });
+            charGeometry.computeBoundingBox();
+            let charCenter = charGeometry.boundingBox.getCenter(new Vector3());
 
             const boxBrush = new Brush( boxGeometry );
             boxBrush.updateMatrixWorld();
 
             const charBrush = new Brush( charGeometry );
+            charBrush.position.x = -charCenter.x
+            charBrush.position.y = -charCenter.y
             charBrush.position.z = -thickness;
             charBrush.updateMatrixWorld();
 
