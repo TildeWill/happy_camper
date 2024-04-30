@@ -23,7 +23,7 @@
 <script type="module">
 
     import * as THREE from 'three';
-    import {SUBTRACTION, Brush, Evaluator, INTERSECTION} from 'three-bvh-csg';
+    import {SUBTRACTION, Brush, Evaluator, INTERSECTION, ADDITION} from 'three-bvh-csg';
     // import { MeshStandardMaterial, Mesh, SphereGeometry, BoxGeometry } from 'three';
 
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -85,7 +85,7 @@
         //     cyanThickness: 0.3,
         //     whiteThickness: 0.3
         // }
-        cyanMeshes = await makeLayer("cyan", 0, 0.3, "W");
+        cyanMeshes = await makeLayer("cyan", 0, 0.3);
         cyanMeshes.forEach((mesh) => scene.add(mesh))
 
         // mesh_yellow = await makeLayer("yellow", 0.3, 0.3, "7", arguments)
@@ -122,7 +122,7 @@
             font: font,
             size: 4,
             depth: thickness,
-            curveSegments: 20,
+            curveSegments: 10,
         });
         charGeometry.computeBoundingBox();
         let charCenter = charGeometry.boundingBox.getCenter(new Vector3());
@@ -148,26 +148,40 @@
         const blueCharBrush = makeCharBrush(blueChar, font, thickness);
 
         const evaluator = new Evaluator();
-        let subtractedMesh = evaluator.evaluate( cyanBoxBrush, redCharBrush, SUBTRACTION );
-        subtractedMesh.castShadow = true;
-        subtractedMesh.position.z = offset;
-        subtractedMesh.material =  new THREE.MeshPhongMaterial({color: "cyan"});
-        subtractedMesh.updateMatrixWorld();
+        let cyanMesh = evaluator.evaluate( cyanBoxBrush, redCharBrush, SUBTRACTION );
+        cyanMesh.castShadow = true;
+        cyanMesh.position.z = offset;
+        cyanMesh.material =  new THREE.MeshPhongMaterial({color: "cyan"});
+        cyanMesh.updateMatrixWorld();
 
         // blueCharBrush + redCharBrush + greenCharBrush = white
-        let whiteMesh = evaluator.evaluate(blueCharBrush, evaluator.evaluate( greenCharBrush, redCharBrush, INTERSECTION ), INTERSECTION);
-        whiteMesh.castShadow = true;
-        whiteMesh.position.z = offset;
-        whiteMesh.material =  new THREE.MeshPhongMaterial({color: "white"});
-        whiteMesh.updateMatrixWorld();
+        let allMesh = evaluator.evaluate(blueCharBrush, evaluator.evaluate( greenCharBrush, redCharBrush, INTERSECTION ), INTERSECTION);
+        allMesh.castShadow = true;
+        allMesh.position.z = offset;
+        allMesh.material =  new THREE.MeshPhongMaterial({color: "white"});
+        allMesh.updateMatrixWorld();
 
-        let magentaMesh = evaluator.evaluate( redCharBrush, whiteMesh, SUBTRACTION );
+        let magentaMesh = evaluator.evaluate( redCharBrush, blueCharBrush, INTERSECTION );
         magentaMesh.castShadow = true;
         magentaMesh.position.z = offset;
         magentaMesh.material =  new THREE.MeshPhongMaterial({color: "magenta"});
         magentaMesh.updateMatrixWorld();
 
-        return [subtractedMesh, whiteMesh, magentaMesh];
+        let yellowMesh = evaluator.evaluate( redCharBrush, greenCharBrush, INTERSECTION );
+        yellowMesh.castShadow = true;
+        yellowMesh.position.z = offset;
+        yellowMesh.material =  new THREE.MeshPhongMaterial({color: "yellow"});
+        yellowMesh.updateMatrixWorld();
+
+        let fillMesh = evaluator.evaluate(evaluator.evaluate(redCharBrush , magentaMesh, SUBTRACTION ), yellowMesh, SUBTRACTION);
+        fillMesh.castShadow = true;
+        fillMesh.position.z = offset;
+        fillMesh.material =  new THREE.MeshPhongMaterial({color: "white"});
+        fillMesh.updateMatrixWorld();
+
+        // let whiteMesh = evaluator.evaluate(allMesh, fillMesh, ADDITION);
+
+        return [cyanMesh, allMesh, fillMesh, yellowMesh, magentaMesh];
     }
 
     function onWindowResize() {
