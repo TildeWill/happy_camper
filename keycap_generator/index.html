@@ -23,7 +23,7 @@
 <script type="module">
 
     import * as THREE from 'three';
-    import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg';
+    import {SUBTRACTION, Brush, Evaluator, INTERSECTION} from 'three-bvh-csg';
     // import { MeshStandardMaterial, Mesh, SphereGeometry, BoxGeometry } from 'three';
 
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -33,7 +33,7 @@
     import {TextGeometry} from "three/addons/geometries/TextGeometry.js";
     import {Vector3} from "three";
 
-    let scene, camera, renderer, exporter, mesh_cyan, mesh_magenta, mesh_yellow, mesh_white;
+    let scene, camera, renderer, exporter, cyanMeshes, mesh_magenta, mesh_yellow, mesh_white;
 
     await init();
     animate();
@@ -45,7 +45,6 @@
 
         scene = new THREE.Scene();
         scene.background = new THREE.Color( 0xa0a0a0 );
-        scene.fog = new THREE.Fog( 0xa0a0a0, 4, 20 );
 
         exporter = new STLExporter();
 
@@ -77,12 +76,22 @@
         scene.add( grid );
 
         // layers
-        mesh_cyan = await makeLayer("cyan", 0, 0.3, "W");
-        scene.add(mesh_cyan);
-        mesh_yellow = await makeLayer("yellow", 0.3, 0.3, "7")
-        scene.add(mesh_yellow)
-        mesh_magenta = await makeLayer("magenta", 0.6, 0.3, "%")
-        scene.add(mesh_magenta)
+        // let arguments = {
+        //     redChar: "%",
+        //     blueChar: "W",
+        //     greenChar: "7",
+        //     yellowThickness: 0.3,
+        //     magentaThickness: 0.3,
+        //     cyanThickness: 0.3,
+        //     whiteThickness: 0.3
+        // }
+        cyanMeshes = await makeLayer("cyan", 0, 0.3, "W");
+        cyanMeshes.forEach((mesh) => scene.add(mesh))
+
+        // mesh_yellow = await makeLayer("yellow", 0.3, 0.3, "7", arguments)
+        // scene.add(mesh_yellow)
+        // mesh_magenta = await makeLayer("magenta", 0.6, 0.3, "%", arguments)
+        // scene.add(mesh_magenta)
 
         //
         renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -108,41 +117,57 @@
 
     }
 
-    async function makeLayer(color, offset, thickness=0.3, character="W") {
-
-        const boxGeometry = new THREE.BoxGeometry(5.5, 5.5, thickness);
-
-        const fontLoader = new FontLoader();
-        let charGeometry;
-        let url = './fonts/helvetiker_regular.typeface.json'
-        const font = await new Promise(resolve => fontLoader.load(url, resolve))
-
-        charGeometry = new TextGeometry(character, {
+    function makeCharBrush(cyanChar, font, thickness) {
+        let charGeometry = new TextGeometry(cyanChar, {
             font: font,
             size: 4,
-            depth: thickness*2,
+            depth: thickness,
             curveSegments: 20,
         });
         charGeometry.computeBoundingBox();
         let charCenter = charGeometry.boundingBox.getCenter(new Vector3());
 
-        const boxBrush = new Brush( boxGeometry );
-        boxBrush.updateMatrixWorld();
-
-        const charBrush = new Brush( charGeometry );
+        const charBrush = new Brush(charGeometry);
         charBrush.position.x = -charCenter.x
         charBrush.position.y = -charCenter.y
-        charBrush.position.z = -thickness;
+        charBrush.position.z = -thickness/2;
         charBrush.updateMatrixWorld();
+        return charBrush;
+    }
+
+    async function makeLayer(color, offset, thickness=0.3, redChar="%", greenChar="7", blueChar="W") {
+        const cyanGeometry = new THREE.BoxGeometry(40, 40, thickness);
+        const cyanBoxBrush = new Brush( cyanGeometry );
+        cyanBoxBrush.updateMatrixWorld();
+
+        const fontLoader = new FontLoader();
+        const font = await new Promise(resolve => fontLoader.load('./fonts/helvetiker_regular.typeface.json', resolve))
+
+        const redCharBrush = makeCharBrush(redChar, font, thickness);
+        const greenCharBrush = makeCharBrush(greenChar, font, thickness);
+        const blueCharBrush = makeCharBrush(blueChar, font, thickness);
 
         const evaluator = new Evaluator();
-        let subtractedMesh = evaluator.evaluate( boxBrush, charBrush, SUBTRACTION );
+        let subtractedMesh = evaluator.evaluate( cyanBoxBrush, redCharBrush, SUBTRACTION );
         subtractedMesh.castShadow = true;
         subtractedMesh.position.z = offset;
-        subtractedMesh.material =  new THREE.MeshPhongMaterial({color: color});
+        subtractedMesh.material =  new THREE.MeshPhongMaterial({color: "cyan"});
+        subtractedMesh.updateMatrixWorld();
 
-        return subtractedMesh;
-        // scene.add(subtractedMesh);
+        // blueCharBrush + redCharBrush + greenCharBrush = white
+        let whiteMesh = evaluator.evaluate(blueCharBrush, evaluator.evaluate( greenCharBrush, redCharBrush, INTERSECTION ), INTERSECTION);
+        whiteMesh.castShadow = true;
+        whiteMesh.position.z = offset;
+        whiteMesh.material =  new THREE.MeshPhongMaterial({color: "white"});
+        whiteMesh.updateMatrixWorld();
+
+        let magentaMesh = evaluator.evaluate( redCharBrush, whiteMesh, SUBTRACTION );
+        magentaMesh.castShadow = true;
+        magentaMesh.position.z = offset;
+        magentaMesh.material =  new THREE.MeshPhongMaterial({color: "magenta"});
+        magentaMesh.updateMatrixWorld();
+
+        return [subtractedMesh, whiteMesh, magentaMesh];
     }
 
     function onWindowResize() {
@@ -163,14 +188,14 @@
 
     function exportASCII() {
 
-        const result = exporter.parse( mesh_cyan );
+        const result = exporter.parse( cyanMeshes );
         saveString( result, 'box.stl' );
 
     }
 
     function exportBinary() {
 
-        const result = exporter.parse( mesh_cyan, { binary: true } );
+        const result = exporter.parse( cyanMeshes, { binary: true } );
         saveArrayBuffer( result, 'box.stl' );
 
     }
