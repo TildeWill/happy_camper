@@ -147,36 +147,41 @@
         const greenCharBrush = makeCharBrush(greenChar, font, thickness);
         const blueCharBrush = makeCharBrush(blueChar, font, thickness);
 
-        const evaluator = new Evaluator();
+        let evaluator = new Evaluator();
+
         let cyanMesh = evaluator.evaluate( cyanBoxBrush, redCharBrush, SUBTRACTION );
-        cyanMesh.castShadow = true;
+        // cyanMesh.castShadow = true;
         cyanMesh.position.z = offset;
-        cyanMesh.material =  new THREE.MeshPhongMaterial({color: "cyan"});
+        cyanMesh.material =  new THREE.MeshBasicMaterial({color: "cyan"});
         cyanMesh.updateMatrixWorld();
 
         // blueCharBrush + redCharBrush + greenCharBrush = white
-        let allMesh = evaluator.evaluate(blueCharBrush, evaluator.evaluate( greenCharBrush, redCharBrush, INTERSECTION ), INTERSECTION);
-        allMesh.castShadow = true;
+        let allMesh = evaluator.evaluate( greenCharBrush, redCharBrush, INTERSECTION );
+        evaluator.evaluate(blueCharBrush, allMesh, INTERSECTION, allMesh);
+        // allMesh.castShadow = true;
         allMesh.position.z = offset;
-        allMesh.material =  new THREE.MeshPhongMaterial({color: "white"});
+        allMesh.material =  new THREE.MeshBasicMaterial({color: "white"});
         allMesh.updateMatrixWorld();
 
         let magentaMesh = evaluator.evaluate( redCharBrush, blueCharBrush, INTERSECTION );
-        magentaMesh.castShadow = true;
+        evaluator.evaluate(magentaMesh, allMesh, SUBTRACTION, magentaMesh);
+        // magentaMesh.castShadow = true;
         magentaMesh.position.z = offset;
-        magentaMesh.material =  new THREE.MeshPhongMaterial({color: "magenta"});
+        magentaMesh.material =  new THREE.MeshBasicMaterial({color: "magenta"});
         magentaMesh.updateMatrixWorld();
 
         let yellowMesh = evaluator.evaluate( redCharBrush, greenCharBrush, INTERSECTION );
-        yellowMesh.castShadow = true;
+        evaluator.evaluate(yellowMesh, allMesh, SUBTRACTION, yellowMesh);
+        // yellowMesh.castShadow = true;
         yellowMesh.position.z = offset;
-        yellowMesh.material =  new THREE.MeshPhongMaterial({color: "yellow"});
+        yellowMesh.material =  new THREE.MeshBasicMaterial({color: "yellow"});
         yellowMesh.updateMatrixWorld();
 
-        let fillMesh = evaluator.evaluate(evaluator.evaluate(redCharBrush , magentaMesh, SUBTRACTION ), yellowMesh, SUBTRACTION);
-        fillMesh.castShadow = true;
+        let fillMesh = evaluator.evaluate(redCharBrush , magentaMesh, SUBTRACTION )
+        evaluator.evaluate(fillMesh, yellowMesh, SUBTRACTION, fillMesh);
+        // fillMesh.castShadow = true;
         fillMesh.position.z = offset;
-        fillMesh.material =  new THREE.MeshPhongMaterial({color: "white"});
+        fillMesh.material =  new THREE.MeshBasicMaterial({color: "white"});
         fillMesh.updateMatrixWorld();
 
         // let whiteMesh = evaluator.evaluate(allMesh, fillMesh, ADDITION);
